@@ -52,6 +52,9 @@ public class Ocean implements OceanInterface {
 				firedField[i][j] = false;
 			}
 		}
+		shotsFired = 0;
+		hitCount = 0;
+		shipsSunk = 0;
 	}
 
 	/**
