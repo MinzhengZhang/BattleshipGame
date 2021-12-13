@@ -7,6 +7,12 @@ public class BattleshipGame {
 
 	}
 
+	/**
+	 * check if the input number from user is a valid input
+	 * 
+	 * @param n input coordinate
+	 * @return true if 0 <= n <= 9, false otherwise
+	 */
 	private boolean isValidInput(int n) {
 		if (n >= 0 && n <= 9) {
 			return true;
@@ -15,6 +21,12 @@ public class BattleshipGame {
 		}
 	}
 
+	/**
+	 * Prompt the user to input the coordinate for firing. The coordinates are only
+	 * accepted when they are integers from 0 to 9.
+	 * 
+	 * @return the {x, y} coordinate from user input
+	 */
 	private int[] getInput() {
 		Scanner scnr = new Scanner(System.in);
 		int x;
