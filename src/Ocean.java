@@ -98,8 +98,8 @@ public class Ocean implements OceanInterface {
 		int y = r.nextInt(10);
 		boolean horizontal = r.nextBoolean();
 		while(!s.okToPlaceShipAt(x,y,horizontal,this)){
-			x = r.nextInt();
-			y = r.nextInt();
+			x = r.nextInt(10);
+			y = r.nextInt(10);
 			horizontal = r.nextBoolean();
 		}
 		s.placeShipAt(x,y,horizontal,this);
@@ -141,7 +141,6 @@ public class Ocean implements OceanInterface {
 		if(target instanceof EmptySea){
 			return false;
 		}
-
 		else{
 			if(target.shootAt(row,column)){
 				hitCount += 1;
@@ -163,7 +162,7 @@ public class Ocean implements OceanInterface {
 	 * @return the number of hits recorded in this game.
 	 */
 	public int getHitCount() {
-		return this.shotsFired;
+		return this.hitCount;
 	}
 
 	/**
@@ -194,9 +193,7 @@ public class Ocean implements OceanInterface {
 	 */
 	@Override
 	public Ship[][] getShipArray() {
-
 		return ships;
-
 	}
 
 	/**
@@ -221,21 +218,29 @@ public class Ocean implements OceanInterface {
 	 */
 	@Override
 	public void print() {
+		//print column number
+		System.out.printf("    \t");
+		for(int i = 0; i<10;i++){
+			System.out.printf("%d\t",i);
+		}
+		System.out.println();
 		for(int i = 0; i < 10; i++){
+			System.out.printf("%d\t",i); // print row number;
 			for(int j = 0; j<10;j++){
 				if(firedField[i][j] == false){
-					System.out.print(".");
+					System.out.printf("\t.");
 				}
 				else if(ships[i][j] instanceof EmptySea){
-					System.out.print("-");
+					System.out.printf("\t-");
 				}
 				else {
-					System.out.print(ships[i][j]);
+					System.out.printf("\t%s",ships[i][j]);
 				}
-				System.out.print(" ");
 			}
+
 			System.out.println();
 		}
 	}
-
 }
+
+

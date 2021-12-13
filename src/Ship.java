@@ -152,6 +152,7 @@ public abstract class Ship {
 	 * 
 	 * @return "x" if this ship has been sunk, and "S" otherwise.
 	 */
+	@Override
 	public String toString() {
 		if (this.isSunk()) {
 			return "x";
