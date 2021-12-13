@@ -73,7 +73,7 @@ public class BattleshipGame {
 			ocean.shootAt(x, y);
 		}
 		ocean.print();
-		System.out.println("Game over! your total score is " + ocean.getHitCount());
+		System.out.println("Game over! your total score is " + ocean.getShotsFired());
 	}
 
 	public static void main(String[] args) {

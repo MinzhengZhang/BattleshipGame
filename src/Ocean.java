@@ -67,20 +67,19 @@ public class Ocean implements OceanInterface {
 	 * @see java.util.Random
 	 */
 	public void placeAllShipsRandomly() {
+		Ship battleship = new Battleship();
+		placeShipRandomly(battleship);
+		for (int i = 0; i < 2;i++ ) {
+			Ship cruiser = new Cruiser();
+			placeShipRandomly(cruiser);
+		}
+
+		for (int i = 0; i< 3;i++) {
+			Ship destroyer = new Destroyer();
+			placeShipRandomly(destroyer);
+		}
 
 		for (int i = 0; i < 4; i++) {
-			if (i == 0) {
-				Ship battleship = new Battleship();
-				placeShipRandomly(battleship);
-			}
-			if (i < 2) {
-				Ship cruiser = new Cruiser();
-				placeShipRandomly(cruiser);
-			}
-			if (i < 3) {
-				Ship destroyer = new Destroyer();
-				placeShipRandomly(destroyer);
-			}
 			Ship submarine = new Submarine();
 			placeShipRandomly(submarine);
 		}
@@ -227,22 +226,22 @@ public class Ocean implements OceanInterface {
 	@Override
 	public void print() {
 		// print column number
-		System.out.printf("    \t");
 		for (int i = 0; i < 10; i++) {
-			System.out.printf("%d\t", i);
+			System.out.printf("\t\t%d", i);
 		}
 		System.out.println();
 		for (int i = 0; i < 10; i++) {
 			System.out.printf("%d", i); // print row number;
 			for (int j = 0; j < 10; j++) {
 				if (firedField[i][j] == false) {
-					System.out.printf("\t.");
+					System.out.printf("\t\t.");
 				} else if (ships[i][j] instanceof EmptySea) {
-					System.out.printf("\t-");
+					System.out.printf("\t\t-");
 				} else {
-					System.out.printf("\t%s", ships[i][j]);
+					System.out.printf("\t\t%s", ships[i][j]);
 				}
 			}
+			System.out.println();
 			System.out.println();
 		}
 	}
