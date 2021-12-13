@@ -99,8 +99,8 @@ public class Ocean implements OceanInterface {
 		int y = r.nextInt(10);
 		boolean horizontal = r.nextBoolean();
 		while (!s.okToPlaceShipAt(x, y, horizontal, this)) {
-			x = r.nextInt();
-			y = r.nextInt();
+			x = r.nextInt(10);
+			y = r.nextInt(10);
 			horizontal = r.nextBoolean();
 		}
 		s.placeShipAt(x, y, horizontal, this);
@@ -140,9 +140,7 @@ public class Ocean implements OceanInterface {
 		Ship target = ships[row][column];
 		if (target instanceof EmptySea) {
 			return false;
-		}
-
-		else {
+		} else {
 			if (target.shootAt(row, column)) {
 				hitCount += 1;
 				return true;
@@ -187,16 +185,14 @@ public class Ocean implements OceanInterface {
 	 * Provides access to the grid of ships in this Ocean. The methods in the Ship
 	 * class that take an Ocean parameter must be able to read and even modify the
 	 * contents of this array. While it is generally undesirable to allow methods in
-	 * one class to directly access instance variables in another class, in this
+	 * one class to directly access instancce variables in another class, in this
 	 * case there is no clear and elegant alternatives.
 	 * 
 	 * @return the 10x10 array of ships.
 	 */
 	@Override
 	public Ship[][] getShipArray() {
-
 		return ships;
-
 	}
 
 	/**
@@ -221,31 +217,25 @@ public class Ocean implements OceanInterface {
 	 */
 	@Override
 	public void print() {
-		for (int i = 0; i <= 10; i++) {
-			for (int j = 0; j <= 10; j++) {
-				if (i == 0 && j < 10) {
-					System.out.println(j + " ");
-					continue;
-				} else if (i == 0 && j == 10) {
-					continue;
-				}
-				if (j == 0 && i < 10) {
-					System.out.println(i + " ");
-					continue;
-				} else if (j == 0 && i == 10) {
-					continue;
-				}
-				if (firedField[i - 1][j - 1] == false) {
-					System.out.print(".");
-				} else if (ships[i - 1][j - 1] instanceof EmptySea) {
-					System.out.print("-");
+		// print column number
+		System.out.printf("    \t");
+		for (int i = 0; i < 10; i++) {
+			System.out.printf("%d\t", i);
+		}
+		System.out.println();
+		for (int i = 0; i < 10; i++) {
+			System.out.printf("%d", i); // print row number;
+			for (int j = 0; j < 10; j++) {
+				if (firedField[i][j] == false) {
+					System.out.printf("\t.");
+				} else if (ships[i][j] instanceof EmptySea) {
+					System.out.printf("\t-");
 				} else {
-					System.out.print(ships[i - 1][j - 1]);
+					System.out.printf("\t%s", ships[i][j]);
 				}
-				System.out.print(" ");
 			}
+
 			System.out.println();
 		}
 	}
-
 }

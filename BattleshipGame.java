@@ -3,16 +3,6 @@ import java.util.Scanner;
 
 public class BattleshipGame {
 
-	public static void main(String[] args) {
-
-	}
-
-	/**
-	 * check if the input number from user is a valid input
-	 * 
-	 * @param n input coordinate
-	 * @return true if 0 <= n <= 9, false otherwise
-	 */
 	private boolean isValidInput(int n) {
 		if (n >= 0 && n <= 9) {
 			return true;
@@ -21,46 +11,55 @@ public class BattleshipGame {
 		}
 	}
 
-	/**
-	 * Prompt the user to input the coordinate for firing. The coordinates are only
-	 * accepted when they are integers from 0 to 9.
-	 * 
-	 * @return the {x, y} coordinate from user input
-	 */
-	private int[] getInput() {
-		Scanner scnr = new Scanner(System.in);
+	private int getInput() {
+		while (true) {
+			Scanner scnr = new Scanner(System.in);
+			int input;
+			try {
+				input = scnr.nextInt();
+				if (this.isValidInput(input)) {
+					return input;
+				} else {
+					System.out.println("Not valid number, please input again.");
+					return getInput();
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Not valid number, please input again.");
+				return getInput();
+			}
+		}
+	}
+
+	private int[] getCoordinate() {
 		int x;
 		int y;
-		while (true) {
-			System.out.println("Input X coordinate (0 - 9):");
-			try {
-				x = scnr.nextInt();
-				if (this.isValidInput(x)) {
-					break;
-				} else {
-					System.out.println("Not valid number, please input again.");
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Not valid number, please input again.");
-				this.getInput();
-			}
-		}
-
-		while (true) {
-			System.out.println("Input Y coordinate (0 - 9):");
-			try {
-				y = scnr.nextInt();
-				if (this.isValidInput(y)) {
-					break;
-				} else {
-					System.out.println("Not valid number, please input again.");
-				}
-			} catch (InputMismatchException e) {
-				System.out.println("Not valid number, please input again.");
-				this.getInput();
-			}
-		}
-		int[] result = { x, y };
-		return result;
+		System.out.println("Input row coordinate (0 - 9):");
+		x = getInput();
+		System.out.println("Input column coordinate (0 - 9):");
+		y = getInput();
+		int[] coordinate = { x, y };
+		return coordinate;
 	}
+
+	public void starter() {
+		Ocean ocean = new Ocean();
+		ocean.placeAllShipsRandomly();
+		while (!ocean.isGameOver()) {
+			ocean.print();
+			System.out.println("Please input the coordinate");
+			int[] coordinate = getCoordinate();
+			int x = coordinate[0];
+			int y = coordinate[1];
+
+			ocean.shootAt(x, y);
+		}
+		ocean.print();
+		System.out.println("Game over! your total score is " + ocean.getHitCount());
+	}
+
+	public static void main(String[] args) {
+		BattleshipGame bg = new BattleshipGame();
+		bg.starter();
+	}
+
 }
