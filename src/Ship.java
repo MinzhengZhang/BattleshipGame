@@ -152,7 +152,6 @@ public abstract class Ship {
 	 * 
 	 * @return "x" if this ship has been sunk, and "S" otherwise.
 	 */
-	@Override
 	public String toString() {
 		if (this.isSunk()) {
 			return "x";
@@ -177,6 +176,12 @@ public abstract class Ship {
 	 *         location with this orientation, and false otherwise.
 	 */
 	public boolean okToPlaceShipAt(int row, int column, boolean horizontal, Ocean ocean) {
+		if (this.isOutOfBound(row, column, horizontal) || this.isHorizontalAdjacent(row, column, horizontal, ocean)
+				|| this.isVerticalAdjacent(row, column, horizontal, ocean)
+				|| this.isDiagonalAdjacent(row, column, horizontal, ocean)) {
+			return false;
+		}
+
 		if (horizontal) {
 			for (int i = 0; i < this.length; i++) {
 				if (ocean.isOccupied(row, column + i)) {
@@ -191,6 +196,111 @@ public abstract class Ship {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Determine if the ship going to be placed will be out of the ocean.
+	 * 
+	 * @param row        the candidate row to place the ship.
+	 * @param column     the candidate column to place the ship.
+	 * @param horizontal whether or not to have the ship facing to the left.
+	 * @return true if the ship is within the ocean, false otherwise.
+	 */
+	private boolean isOutOfBound(int row, int column, boolean horizontal) {
+		if (horizontal) {
+			if (9 - column < this.length - 1) {
+				return true;
+			}
+		} else {
+			if (9 - row < this.length - 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Determine if the ship going to be placed will be horizontally adjacent to
+	 * another ship in the ocean
+	 * 
+	 * @param row        the candidate row to place the ship
+	 * @param column     the candidate column to place the ship
+	 * @param horizontal whether or not to have the ship facing to the left
+	 * @param ocean      the Ocean in which this ship might be placed
+	 * @return true if the ship will be horizontally adjacent to another ship in the
+	 *         ocean, false otherwise
+	 */
+	private boolean isHorizontalAdjacent(int row, int column, boolean horizontal, Ocean ocean) {
+		if (horizontal) {
+			if (ocean.isOccupied(row, Math.max(0, column - 1))
+					|| ocean.isOccupied(row, Math.min(9, column + this.length))) {
+				return true;
+			}
+		} else {
+			for (int i = row; i < Math.min(9, row + this.length - 1); i++) {
+				if (ocean.isOccupied(i, Math.max(0, column - 1)) || ocean.isOccupied(i, Math.min(9, column + 1))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Determine if the ship going to be placed will be vertically adjacent to
+	 * another ship in the ocean
+	 * 
+	 * @param row        the candidate row to place the ship
+	 * @param column     the candidate column to place the ship
+	 * @param horizontal whether or not to have the ship facing to the left
+	 * @param ocean      the Ocean in which this ship might be placed
+	 * @return true if the ship will be vertically adjacent to another ship in the
+	 *         ocean, false otherwise
+	 */
+	private boolean isVerticalAdjacent(int row, int column, boolean horizontal, Ocean ocean) {
+		if (horizontal) {
+			for (int i = column; i < Math.min(9, column + this.length - 1); i++) {
+				if (ocean.isOccupied(Math.max(0, row - 1), i) || ocean.isOccupied(Math.min(9, row + 1), i)) {
+					return true;
+				}
+			}
+		} else {
+			if (ocean.isOccupied(Math.max(0, row - 1), column)
+					|| ocean.isOccupied(Math.min(9, row + this.length), column)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Determine if the ship going to be placed will be diagonally adjacent to
+	 * another ship in the ocean
+	 * 
+	 * @param row        the candidate row to place the ship
+	 * @param column     the candidate column to place the ship
+	 * @param horizontal whether or not to have the ship facing to the left
+	 * @param ocean      the Ocean in which this ship might be placed
+	 * @return true if the ship will be diagonally adjacent to another ship in the
+	 *         ocean, false otherwise
+	 */
+	private boolean isDiagonalAdjacent(int row, int column, boolean horizontal, Ocean ocean) {
+		if (horizontal) {
+			if (ocean.isOccupied(Math.max(row - 1, 0), Math.max(column - 1, 0))
+					|| ocean.isOccupied(Math.min(row + 1, 9), Math.max(column - 1, 0))
+					|| ocean.isOccupied(Math.max(row - 1, 0), Math.min(column + this.length, 9))
+					|| ocean.isOccupied(Math.min(row + 1, 9), Math.min(column + this.length, 9))) {
+				return true;
+			}
+		} else {
+			if (ocean.isOccupied(Math.max(row - 1, 0), Math.max(column - 1, 0))
+					|| ocean.isOccupied(Math.max(row - 1, 0), Math.min(column + 1, 9))
+					|| ocean.isOccupied(Math.min(row + this.length, 9), Math.max(column - 1, 0))
+					|| ocean.isOccupied(Math.min(row + this.length, 9), Math.min(column + 1, 9))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

@@ -1,3 +1,4 @@
+
 /**
  * This class manages the game state by keeping track of what entity is
  * contained in each position on the game board.
@@ -6,11 +7,12 @@
  *
  */
 import java.util.Random;
+
 public class Ocean implements OceanInterface {
 
 	/**
-	 * A 10x10 2D array of booleans, which can be used to quickly determine
-	 * the location given whether has been fired.
+	 * A 10x10 2D array of booleans, which can be used to quickly determine the
+	 * location given whether has been fired.
 	 */
 	private boolean[][] firedField;
 
@@ -46,9 +48,9 @@ public class Ocean implements OceanInterface {
 	public Ocean() {
 		ships = new Ship[10][10];
 		firedField = new boolean[10][10];
-		for(int i = 0; i < 10;i++ ){
-			for(int j = 0; j<10; j++){
-				ships[i][j] = (Ship)new EmptySea();
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				ships[i][j] = (Ship) new EmptySea();
 				firedField[i][j] = false;
 			}
 		}
@@ -66,16 +68,16 @@ public class Ocean implements OceanInterface {
 	 */
 	public void placeAllShipsRandomly() {
 
-		for(int i = 0; i < 4; i++ ){
-			if(i == 0){
+		for (int i = 0; i < 4; i++) {
+			if (i == 0) {
 				Ship battleship = new Battleship();
 				placeShipRandomly(battleship);
 			}
-			if(i < 2){
+			if (i < 2) {
 				Ship cruiser = new Cruiser();
 				placeShipRandomly(cruiser);
 			}
-			if(i < 3){
+			if (i < 3) {
 				Ship destroyer = new Destroyer();
 				placeShipRandomly(destroyer);
 			}
@@ -84,27 +86,24 @@ public class Ocean implements OceanInterface {
 		}
 	}
 
-
 	/**
-	 * Place  one ship randomly on the  ocean.
-	 *
-	 *
+	 * Place one ship randomly on the ocean.
+	 *@param s   put Ship s randomly on the ocean
 	 *
 	 * @see java.util.Random
 	 */
-	private void placeShipRandomly(Ship s){
+	private void placeShipRandomly(Ship s) {
 		Random r = new Random();
-		int x = r.nextInt(10) ;
+		int x = r.nextInt(10);
 		int y = r.nextInt(10);
 		boolean horizontal = r.nextBoolean();
-		while(!s.okToPlaceShipAt(x,y,horizontal,this)){
+		while (!s.okToPlaceShipAt(x, y, horizontal, this)) {
 			x = r.nextInt(10);
 			y = r.nextInt(10);
 			horizontal = r.nextBoolean();
 		}
-		s.placeShipAt(x,y,horizontal,this);
+		s.placeShipAt(x, y, horizontal, this);
 	}
-
 
 	/**
 	 * Checks if this coordinate is not empty; that is, if this coordinate does not
@@ -116,7 +115,7 @@ public class Ocean implements OceanInterface {
 	 *         {@literal false} otherwise.
 	 */
 	public boolean isOccupied(int row, int column) {
-		if(ships[row][column] instanceof EmptySea ){
+		if (ships[row][column] instanceof EmptySea) {
 			return false;
 		}
 		return true;
@@ -135,17 +134,24 @@ public class Ocean implements OceanInterface {
 	 *         EmptySea), {@literal false} if it does not.
 	 */
 	public boolean shootAt(int row, int column) {
-		firedField[row][column] = true;
+
 		shotsFired += 1;
 		Ship target = ships[row][column];
-		if(target instanceof EmptySea){
+		if (target instanceof EmptySea) {
+			firedField[row][column] = true;
 			return false;
-		}
-		else{
-			if(target.shootAt(row,column)){
+		} else {
+			if (target.shootAt(row, column)) {
+				if(firedField[row][column] == false){
+					if(target.isSunk()){
+						shipsSunk +=1;
+					}
+				}
 				hitCount += 1;
+				firedField[row][column] = true;
 				return true;
 			}
+			firedField[row][column] = true;
 			return false;
 		}
 
@@ -154,6 +160,7 @@ public class Ocean implements OceanInterface {
 	/**
 	 * @return the number of shots fired in this game.
 	 */
+	@Override
 	public int getShotsFired() {
 		return this.shotsFired;
 	}
@@ -161,6 +168,7 @@ public class Ocean implements OceanInterface {
 	/**
 	 * @return the number of hits recorded in this game.
 	 */
+	@Override
 	public int getHitCount() {
 		return this.hitCount;
 	}
@@ -218,29 +226,24 @@ public class Ocean implements OceanInterface {
 	 */
 	@Override
 	public void print() {
-		//print column number
+		// print column number
 		System.out.printf("    \t");
-		for(int i = 0; i<10;i++){
-			System.out.printf("%d\t",i);
+		for (int i = 0; i < 10; i++) {
+			System.out.printf("%d\t", i);
 		}
 		System.out.println();
-		for(int i = 0; i < 10; i++){
-			System.out.printf("%d\t",i); // print row number;
-			for(int j = 0; j<10;j++){
-				if(firedField[i][j] == false){
+		for (int i = 0; i < 10; i++) {
+			System.out.printf("%d", i); // print row number;
+			for (int j = 0; j < 10; j++) {
+				if (firedField[i][j] == false) {
 					System.out.printf("\t.");
-				}
-				else if(ships[i][j] instanceof EmptySea){
+				} else if (ships[i][j] instanceof EmptySea) {
 					System.out.printf("\t-");
-				}
-				else {
-					System.out.printf("\t%s",ships[i][j]);
+				} else {
+					System.out.printf("\t%s", ships[i][j]);
 				}
 			}
-
 			System.out.println();
 		}
 	}
 }
-
-
