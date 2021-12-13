@@ -237,7 +237,7 @@ public abstract class Ship {
 				return true;
 			}
 		} else {
-			for (int i = row; i < Math.min(9, row + this.length - 1); i++) {
+			for (int i = row; i < Math.min(9, row + this.length); i++) {
 				if (ocean.isOccupied(i, Math.max(0, column - 1)) || ocean.isOccupied(i, Math.min(9, column + 1))) {
 					return true;
 				}
@@ -259,7 +259,7 @@ public abstract class Ship {
 	 */
 	private boolean isVerticalAdjacent(int row, int column, boolean horizontal, Ocean ocean) {
 		if (horizontal) {
-			for (int i = column; i < Math.min(9, column + this.length - 1); i++) {
+			for (int i = column; i < Math.min(9, column + this.length); i++) {
 				if (ocean.isOccupied(Math.max(0, row - 1), i) || ocean.isOccupied(Math.min(9, row + 1), i)) {
 					return true;
 				}
