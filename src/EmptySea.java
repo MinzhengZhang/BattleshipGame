@@ -43,13 +43,10 @@ public class EmptySea extends Ship {
 	}
 
 	/**
-	 * Returns a single character String to use in the Ocean's print method. This
-	 * method should return "x" if the ship has been sunk, and "S" if it has not yet
-	 * been sunk. This method can only be used to print out locations in the ocean
-	 * that have been shot at; it should not be used to print locations that have
-	 * not been the target of a shot yet.
+	 * Returns a single character String to use in the Ocean's print method. Since
+	 * an EmptySea is not a ship, the display should be treated differently.
 	 * 
-	 * @return "x" if this ship has been sunk, and "S" otherwise.
+	 * @return "-" return "-" indicating it is an Empty sea tile.
 	 */
 	@Override
 	public String toString() {
