@@ -119,6 +119,7 @@ public class OceanTest {
     }
     @Test
     public void testPrint(){
+        PrintStream origin = System.out;
         InitialOcean();
         Battleship  battleShip = new Battleship();
         battleShip.placeShipAt(0,3,true,ocean);
@@ -157,6 +158,8 @@ public class OceanTest {
         assertEquals("x",actual.substring(120,121));
         assertEquals(expected.substring(70,71), actual.substring(70,71));
         assertEquals("-",actual.substring(actual.length()-5,actual.length()-4));
+        System.setOut(origin);
+
     }
 
 
