@@ -19,6 +19,13 @@ public class OceanTest {
         assertTrue(ocean.isOccupied(4,4));
         assertTrue(ocean.isOccupied(5,4));
         assertTrue(!ocean.isOccupied(6,2));
+
+        Ship  s2 = new Battleship();
+        s2.placeShipAt(5,8,false,ocean);
+        Ship s3 = new Submarine();
+        s3.placeShipAt(9,8,true,ocean);
+        assertTrue(!ocean.isOccupied(9,8));
+
     }
 
     @Test

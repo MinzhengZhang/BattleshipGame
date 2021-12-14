@@ -69,8 +69,16 @@ public class BattleshipGame {
 			int[] coordinate = getCoordinate();
 			int x = coordinate[0];
 			int y = coordinate[1];
+			Ship target = ocean.getShipArray()[x][y];
+			if(ocean.shootAt(x, y)){
+				System.out.println("hit");
+				if(target.isSunk()){
+					System.out.println("You just sunk a "+target.getShipType());
+				}
+			}else{
+				System.out.println("miss");
+			}
 
-			ocean.shootAt(x, y);
 		}
 		ocean.print();
 		System.out.println("Game over! your total score is " + ocean.getShotsFired());
