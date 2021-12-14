@@ -87,21 +87,22 @@ public class Ocean implements OceanInterface {
 
 	/**
 	 * Place one ship randomly on the ocean.
-	 *@param s   put Ship s randomly on the ocean
-	 *
+	 *@param ship  put Ship ship randomly on the ocean, ship can be
+	 *  Battleship,Destroyer, Cruiser and Submarine.
+	 * @author Minzheng Zhang
 	 * @see java.util.Random
 	 */
-	private void placeShipRandomly(Ship s) {
+	private void placeShipRandomly(Ship ship) {
 		Random r = new Random();
 		int x = r.nextInt(10);
 		int y = r.nextInt(10);
 		boolean horizontal = r.nextBoolean();
-		while (!s.okToPlaceShipAt(x, y, horizontal, this)) {
+		while (!ship.okToPlaceShipAt(x, y, horizontal, this)) {
 			x = r.nextInt(10);
 			y = r.nextInt(10);
 			horizontal = r.nextBoolean();
 		}
-		s.placeShipAt(x, y, horizontal, this);
+		ship.placeShipAt(x, y, horizontal, this);
 	}
 
 	/**

@@ -4,7 +4,9 @@ import java.util.Scanner;
 public class BattleshipGame {
 
 	/**
-	 * check user's input whether or not is valid
+	 * Check user's input whether or not is valid; this method will be called
+	 * by getInput() method.
+	 * @param n input n is an integer, if n > 9 or < 0, n is invalid
 	 * @return {@literal true} if user's input is valid, otherwise
 	 *         {@literal false}.
 	 */
@@ -17,7 +19,9 @@ public class BattleshipGame {
 	}
 
 	/**
-	 * Get user's input
+	 * Get user's valid input; every time only get one valid integer to
+	 * represent row or column's coodinate, this method will be called
+	 * by getCoordinate() method.
 	 * @return one integer that represent x coordinate or y coordinate
 	 */
 	private int getInput() {
