@@ -116,7 +116,7 @@ public class ShipTest {
 		ocean.shootAt(1, 0);
 		assertTrue(destroyer.toString().equals("x"));
 		Ship emptySea = new EmptySea();
-		assertTrue(emptySea.toString().equals("S"));
+		assertTrue(emptySea.toString().equals("-"));
 	}
 
 	@Test
