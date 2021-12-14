@@ -236,9 +236,8 @@ public class Ocean implements OceanInterface {
 			for (int j = 0; j < 10; j++) {
 				if (firedField[i][j] == false) {
 					System.out.printf("\t\t.");
-				} else if (ships[i][j] instanceof EmptySea) {
-					System.out.printf("\t\t-");
-				} else {
+				}
+				else {
 					System.out.printf("\t\t%s", ships[i][j]);
 				}
 			}

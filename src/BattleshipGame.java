@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class BattleshipGame {
@@ -37,7 +38,7 @@ public class BattleshipGame {
 					System.out.println("Not valid number, please input again.");
 					return getInput();
 				}
-			} catch (InputMismatchException e) {
+			} catch (NoSuchElementException e) {
 				System.out.println("Not valid number, please input again.");
 				return getInput();
 			}
@@ -49,7 +50,7 @@ public class BattleshipGame {
 	 * 
 	 * @return the coordinate of ship by a int array
 	 */
-	private int[] getCoordinate() {
+	public  int[] getCoordinate() {
 		int x;
 		int y;
 		System.out.println("Input row coordinate (0 - 9):");

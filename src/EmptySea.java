@@ -53,11 +53,7 @@ public class EmptySea extends Ship {
 	 */
 	@Override
 	public String toString() {
-		if (this.isSunk()) {
-			return "x";
-		} else {
-			return "S";
-		}
+		return "-";
 	}
 
 	/**
