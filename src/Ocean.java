@@ -244,6 +244,7 @@ public class Ocean implements OceanInterface {
 			}
 			System.out.println();
 			System.out.println();
+
 		}
 	}
 }

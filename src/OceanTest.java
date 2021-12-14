@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -113,8 +117,47 @@ public class OceanTest {
         }
         assertTrue(ocean.isGameOver());
     }
-
-
+    @Test
+    public void testPrint(){
+        InitialOcean();
+        Battleship  battleShip = new Battleship();
+        battleShip.placeShipAt(0,3,true,ocean);
+        Submarine submarine = new Submarine();
+        ocean.shootAt(0,3);
+        submarine.placeShipAt(2,5,true,ocean);
+        ocean.shootAt(2,5);
+        ocean.shootAt(9,9);
+        OutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+        ocean.print();
+        String actual = outputStream.toString();
+        String expected = "\t\t0\t\t1\t\t2\t\t3\t\t4\t\t5\t\t6\t\t7\t\t8\t\t9\n" +
+                "0\t\t.\t\t.\t\t.\t\tS\t\tS\t\tS\t\tS\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "1\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "2\t\t.\t\t.\t\t.\t\t.\t\t.\t\tx\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "3\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "4\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "5\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "6\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "7\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "8\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\n" +
+                "\n" +
+                "9\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t.\t\t-\n"+"\n";
+        assertEquals("S",actual.substring(44,45));
+        assertEquals(expected.substring(0,30), actual.substring(0,30));
+        assertEquals("x",actual.substring(120,121));
+        assertEquals(expected.substring(70,71), actual.substring(70,71));
+        assertEquals("-",actual.substring(actual.length()-5,actual.length()-4));
+    }
 
 
 }

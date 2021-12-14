@@ -4,11 +4,11 @@ import java.util.Scanner;
 public class BattleshipGame {
 
 	/**
-	 * Check user's input whether or not is valid; this method will be called
-	 * by getInput() method.
+	 * Check user's input whether or not is valid; this method will be called by
+	 * getInput() method.
+	 * 
 	 * @param n input n is an integer, if n > 9 or < 0, n is invalid
-	 * @return {@literal true} if user's input is valid, otherwise
-	 *         {@literal false}.
+	 * @return {@literal true} if user's input is valid, otherwise {@literal false}.
 	 */
 	private boolean isValidInput(int n) {
 		if (n >= 0 && n <= 9) {
@@ -19,9 +19,10 @@ public class BattleshipGame {
 	}
 
 	/**
-	 * Get user's valid input; every time only get one valid integer to
-	 * represent row or column's coodinate, this method will be called
-	 * by getCoordinate() method.
+	 * Get user's valid input; every time only get one valid integer to represent
+	 * row or column's coodinate, this method will be called by getCoordinate()
+	 * method.
+	 * 
 	 * @return one integer that represent x coordinate or y coordinate
 	 */
 	private int getInput() {
@@ -45,6 +46,7 @@ public class BattleshipGame {
 
 	/**
 	 * Get coordinate of ship by using getInput helper method
+	 * 
 	 * @return the coordinate of ship by a int array
 	 */
 	private int[] getCoordinate() {
@@ -58,13 +60,12 @@ public class BattleshipGame {
 		return coordinate;
 	}
 
-
 	/**
-	 * Game starter for BattleshipGame, automatically run the game after
-	 * run the starter()
+	 * Game starter for BattleshipGame, automatically run the game after run the
+	 * starter()
 	 *
 	 */
-	public void starter() {
+	private void starter() {
 		Ocean ocean = new Ocean();
 		ocean.placeAllShipsRandomly();
 		while (!ocean.isGameOver()) {
@@ -74,12 +75,12 @@ public class BattleshipGame {
 			int x = coordinate[0];
 			int y = coordinate[1];
 			Ship target = ocean.getShipArray()[x][y];
-			if(ocean.shootAt(x, y)){
+			if (ocean.shootAt(x, y)) {
 				System.out.println("hit");
-				if(target.isSunk()){
-					System.out.println("You just sunk a "+target.getShipType());
+				if (target.isSunk()) {
+					System.out.println("You just sunk a " + target.getShipType());
 				}
-			}else{
+			} else {
 				System.out.println("miss");
 			}
 
@@ -89,6 +90,7 @@ public class BattleshipGame {
 	}
 
 	public static void main(String[] args) {
+
 		BattleshipGame bg = new BattleshipGame();
 		bg.starter();
 	}
